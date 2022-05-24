@@ -1,0 +1,22 @@
+{
+  "name": "23-web-100-express-js-introduction",
+  "version": "1.0.0",
+  "description": "Getting started with ExpressJS",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avishkaindula/0023-web-100-express-js-introduction.git"
+  },
+  "author": "Avishka Indula",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/avishkaindula/0023-web-100-express-js-introduction/issues"
+  },
+  "homepage": "https://github.com/avishkaindula/0023-web-100-express-js-introduction#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}

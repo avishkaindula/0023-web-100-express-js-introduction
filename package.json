@@ -18,5 +18,8 @@
   "homepage": "https://github.com/avishkaindula/0023-web-100-express-js-introduction#readme",
   "dependencies": {
     "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
   }
 }

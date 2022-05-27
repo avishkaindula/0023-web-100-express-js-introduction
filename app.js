@@ -25,6 +25,14 @@
 // --------------------------------------------------------------------------------------------------------------------
 // creating a custom server form expressJS-----------------------------------------------------------------------------
 
+const fs = require("fs");
+// This is the file system package.
+// This will help us to interact with the json files.
+
+const path = require("path");
+// This will help us to construct paths through our project files.
+// This will create paths that would work on all operating systems.
+
 const express = require("express");
 // express package is a function.
 // http package is an object.
@@ -84,8 +92,40 @@ app.post("/store-user", function (req, res) {
   // so req.body.username; will give the data entered by the user.
   // but nodeJS won't parse the actual request data automatically.
   // app.use(express.urlencoded({ extended: false })); code will parse the code.
-  console.log(userName);
+
+  // console.log(userName);
   // This will console.log the user input to the terminal on the VS code, not the browser console.
+
+  const filePath = path.join(__dirname, "data", "users.json");
+  // we need to join multiple fragments that describes the overall path where the data should be stored.
+  // __dirname is a built in variable that holds the absolute path to this project directory.
+  // it has "two" underscores.
+  // after adding __dirname, we add the other files and folders that we want to dive in.
+
+  const fileData = fs.readFileSync(filePath);
+  // This will read the data on the users.json file as a text.
+  // The text inside that users.json file is just a [] mark.
+  const existingUsers = JSON.parse(fileData);
+  // This will convert [] inside the json file from text into a JS array.
+  // We need to convert that into an array if we need to push userName as data into that.
+
+  existingUsers.push(userName);
+  // This will add a new item at the end of the array inside the json file.
+
+  fs.writeFileSync(filePath, JSON.stringify(existingUsers));
+  // This is how we write data into the users.json file
+  // users.json is simply a text file that holds data.
+  // filePath tells the location of the file that we need to write the data into.
+  // We should also define the "data" that should be written in.
+  // And that should be the "existing list" in that file (the list we defined with [] mark.) + the username.
+  // For that first of all we need to read the json file. => fs.readFileSync(filePath)
+  // and then we need to add userName to that file. => existingUsers.push(userName)
+  // And then we need to write the updated file back in to the file. => JSON.stringify(existingUsers)
+  // JSON.stringify will convert the [] form JS array to a normal text,
+  // because json files only allows to write just normal text.
+  // Now whenever we run the node app.js server and and enter some names through the form in the browser,
+  // The users.json file gets updated by the names that the users wrote inside the form.
+
   res.send("<h1>Username stored!</h1>");
 });
 // we ust "app.post" to extract the data that was submitted through the form.

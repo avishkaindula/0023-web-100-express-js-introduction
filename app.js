@@ -115,6 +115,8 @@ app.post("/store-user", function (req, res) {
   fs.writeFileSync(filePath, JSON.stringify(existingUsers));
   // This is how we write data into the users.json file
   // users.json is simply a text file that holds data.
+  // "JSON" if a format that can be used in almost every programming language.
+  // Alternatives to JSON are "XML" and "Apache Parquet".
   // filePath tells the location of the file that we need to write the data into.
   // We should also define the "data" that should be written in.
   // And that should be the "existing list" in that file (the list we defined with [] mark.) + the username.
@@ -130,9 +132,35 @@ app.post("/store-user", function (req, res) {
 });
 // we ust "app.post" to extract the data that was submitted through the form.
 
-// We don't set status codes on the above functions because express set it to 200 by default.
+app.get("/users", function (req, res) {
+  const filePath = path.join(__dirname, "data", "users.json");
+  const fileData = fs.readFileSync(filePath);
+  const existingUsers = JSON.parse(fileData);
+  // This will parse the data inside the users.json file into an array.
+  // now we can use that array for our needs.
+
+  // res.send(existingUsers);
+  // This will give the output as follows => ["Indula","Shameen","Janith"]
+
+  let responseData = "<ul>";
+
+  for (const user of existingUsers) {
+    responseData = responseData + "<li>" + user + "</li>";
+    // responseData += "<li>" + user + "</li>"; <= this is the same as the above code.
+    // "user" is a single item of the array.
+  }
+
+  responseData = responseData + "</ul>";
+  // The above code will concatenate and create an unordered list.
+
+  res.send(responseData);
+  // The above code will output the data as an "unordered list."
+});
+// This "/users" path will allow us to output all the names entered by the users.
 
 app.listen(3000);
 // We don't need to createServer manually.
 // Instead a server is created automatically by express.
 // Now we can call listen method.
+
+// We don't set status codes on the above functions because express set it to 200 by default.
